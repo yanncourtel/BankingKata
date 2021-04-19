@@ -1,0 +1,8 @@
+C:\Git\BankingKata\BankingApp\BankingApp\bin\Debug\netcoreapp3.1\BankingApp.deps.json
+C:\Git\BankingKata\BankingApp\BankingApp\bin\Debug\netcoreapp3.1\BankingApp.dll
+C:\Git\BankingKata\BankingApp\BankingApp\bin\Debug\netcoreapp3.1\BankingApp.pdb
+C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.AssemblyInfoInputs.cache
+C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.AssemblyInfo.cs
+C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.csproj.CoreCompileInputs.cache
+C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.dll
+C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.pdb
