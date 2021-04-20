@@ -6,3 +6,4 @@ C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.Asse
 C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.csproj.CoreCompileInputs.cache
 C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.dll
 C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.pdb
+C:\Git\BankingKata\BankingApp\BankingApp\obj\Debug\netcoreapp3.1\BankingApp.csprojAssemblyReference.cache

@@ -99,3 +99,6 @@ C:\Git\BankingKata\BankingApp\BankingApp.Tests\obj\Debug\netcoreapp3.1\BankingAp
 C:\Git\BankingKata\BankingApp\BankingApp.Tests\obj\Debug\netcoreapp3.1\BankingApp.Tests.dll
 C:\Git\BankingKata\BankingApp\BankingApp.Tests\obj\Debug\netcoreapp3.1\BankingApp.Tests.pdb
 C:\Git\BankingKata\BankingApp\BankingApp.Tests\obj\Debug\netcoreapp3.1\BankingApp.Tests.genruntimeconfig.cache
+C:\Git\BankingKata\BankingApp\BankingApp.Tests\obj\Debug\netcoreapp3.1\BankingApp.Tests.csprojAssemblyReference.cache
+C:\Git\BankingKata\BankingApp\BankingApp.Tests\bin\Debug\netcoreapp3.1\BankingApp.dll
+C:\Git\BankingKata\BankingApp\BankingApp.Tests\bin\Debug\netcoreapp3.1\BankingApp.pdb

@@ -10,14 +10,14 @@
         "projectUniqueName": "C:\\Git\\BankingKata\\BankingApp\\BankingApp.Tests\\BankingApp.Tests.csproj",
         "projectName": "BankingApp.Tests",
         "projectPath": "C:\\Git\\BankingKata\\BankingApp\\BankingApp.Tests\\BankingApp.Tests.csproj",
-        "packagesPath": "C:\\Users\\charl\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\yann.courtel\\.nuget\\packages\\",
         "outputPath": "C:\\Git\\BankingKata\\BankingApp\\BankingApp.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\charl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yann.courtel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,12 +25,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://tfsdropserver:8082/repository/NuGet-NetCore-Official/": {},
+          "http://tfsdropserver:8082/repository/nugetcoregroupcdiscount/": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Git\\BankingKata\\BankingApp\\BankingApp\\BankingApp.csproj": {
+                "projectPath": "C:\\Git\\BankingKata\\BankingApp\\BankingApp\\BankingApp.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -41,7 +46,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "FluentAssertions": {
               "target": "Package",
@@ -83,7 +87,64 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Git\\BankingKata\\BankingApp\\BankingApp\\BankingApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Git\\BankingKata\\BankingApp\\BankingApp\\BankingApp.csproj",
+        "projectName": "BankingApp",
+        "projectPath": "C:\\Git\\BankingKata\\BankingApp\\BankingApp\\BankingApp.csproj",
+        "packagesPath": "C:\\Users\\yann.courtel\\.nuget\\packages\\",
+        "outputPath": "C:\\Git\\BankingKata\\BankingApp\\BankingApp\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\yann.courtel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://tfsdropserver:8082/repository/NuGet-NetCore-Official/": {},
+          "http://tfsdropserver:8082/repository/nugetcoregroupcdiscount/": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -10,14 +10,14 @@
         "projectUniqueName": "C:\\Git\\BankingKata\\BankingApp\\BankingApp\\BankingApp.csproj",
         "projectName": "BankingApp",
         "projectPath": "C:\\Git\\BankingKata\\BankingApp\\BankingApp\\BankingApp.csproj",
-        "packagesPath": "C:\\Users\\charl\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\yann.courtel\\.nuget\\packages\\",
         "outputPath": "C:\\Git\\BankingKata\\BankingApp\\BankingApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\charl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yann.courtel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,11 +25,12 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://tfsdropserver:8082/repository/NuGet-NetCore-Official/": {},
+          "http://tfsdropserver:8082/repository/nugetcoregroupcdiscount/": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -41,7 +42,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -57,7 +57,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.408\\RuntimeIdentifierGraph.json"
         }
       }
     }
