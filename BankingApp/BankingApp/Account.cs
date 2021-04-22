@@ -4,21 +4,23 @@ using System.Text;
 
 namespace BankingApp
 {
-    public class Account
+    public class Account : IAccount
     {
         private readonly ICanRenderDate dateRenderer;
+        private readonly IOutputAdapter console;
         private int balance;
 
         private readonly List<AccountTransaction> transactions;
 
-        public Account(ICanRenderDate dateRenderer)
+        public Account(ICanRenderDate dateRenderer, IOutputAdapter console)
         {
             this.dateRenderer = dateRenderer;
+            this.console = console;
             balance = 0;
             transactions = new List<AccountTransaction>();
         }
 
-        public string PrintStatement()
+        public void PrintStatement()
         {
             StringBuilder statement = new StringBuilder("Date\t\tAmount\t\tBalance");
 
@@ -28,12 +30,7 @@ namespace BankingApp
                     $"\n{dateRenderer.RenderDate(transaction.Date)}\t\t{transaction.Operator}{transaction.Amount}\t\t{transaction.Balance}");
             }
 
-            return statement.ToString();
-        }
-
-        public double ShowBalance()
-        {
-            return balance;
+            console.Send(statement.ToString());
         }
 
         public void Deposit(int amount)
@@ -49,7 +46,7 @@ namespace BankingApp
             });
         }
 
-        public void Withdraw(in int amount)
+        public void Withdraw(int amount)
         {
             balance -= amount;
 

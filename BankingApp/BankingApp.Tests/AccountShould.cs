@@ -1,62 +1,36 @@
 using System;
 using FluentAssertions;
+using Moq;
 using Xunit;
 
 namespace BankingApp.Tests
 {
     public class AccountShould
     {
-        private readonly Account account;
+        private readonly IAccount account;
+        private readonly Mock<IOutputAdapter> fakeConsole = new Mock<IOutputAdapter>();
+        private string consoleResult = string.Empty;
 
         public AccountShould()
         {
             ICanRenderDate dateRenderer = new DateRenderer();
-            account = new Account(dateRenderer);
+
+            fakeConsole
+                .Setup(x => x.Send(It.IsAny<string>()))
+                .Callback((string messageSent) =>
+                {
+                    consoleResult = messageSent;
+                });
+
+            account = new Account(dateRenderer, fakeConsole.Object);
         }
 
         [Fact]
         public void Be_Able_To_Print_Statement()
         {
-            var statement = account.PrintStatement();
-            statement.Should().Be("Date\t\tAmount\t\tBalance");
-        }
+            account.PrintStatement();
 
-        [Fact]
-        public void Show_Balance()
-        {
-            var balance = account.ShowBalance();
-            balance.Should().Be(0);
-        }
-
-        [Fact]
-        public void Be_Able_To_Deposit_Money()
-        {
-            var expectedAmount = 500;
-
-            account.Deposit(expectedAmount);
-            var balance = account.ShowBalance();
-            
-            balance.Should().Be(expectedAmount);
-        }
-
-        [Fact]
-        public void Be_Able_To_Withdraw_Money()
-        {
-            var depositAmount = 500;
-            var withdrawAmount = 200;
-            var expectedAmount = depositAmount - withdrawAmount;
-
-            account.Deposit(depositAmount);
-            account.Withdraw(withdrawAmount);
-            var balance = account.ShowBalance();
-            
-            balance.Should().Be(expectedAmount);
-        }
-
-        [Fact]
-        public void Today_Date_Printed()
-        {
-            DateTime.Today.ToString("d.M.yyyy").Should().Be("20.4.2021");
+            consoleResult.Should().Be("Date\t\tAmount\t\tBalance");
         }
 
         [Fact]
@@ -64,12 +38,25 @@ namespace BankingApp.Tests
         {
             var expectedStatement =
                 $"Date\t\tAmount\t\tBalance\n" +
-                $"20.4.2021\t\t+500\t\t500";
+                $"{DateTime.Today:d.M.yyyy}\t\t+500\t\t500";
 
             account.Deposit(500);
-            var statement = account.PrintStatement();
+            account.PrintStatement();
             
-            statement.Should().Be(expectedStatement);
+            consoleResult.Should().Be(expectedStatement);
+        }
+
+        [Fact]
+        public void Be_Able_To_Print_Statement_With_Withdraw_Transactions()
+        {
+            var expectedStatement =
+                $"Date\t\tAmount\t\tBalance\n" +
+                $"{DateTime.Today:d.M.yyyy}\t\t-200\t\t-200";
+
+            account.Withdraw(200);
+            account.PrintStatement();
+            
+            consoleResult.Should().Be(expectedStatement);
         }
 
         [Fact]
@@ -77,14 +64,14 @@ namespace BankingApp.Tests
         {
             var expectedStatement =
                 $"Date\t\tAmount\t\tBalance\n" +
-                $"20.4.2021\t\t+500\t\t500\n" +
-                $"20.4.2021\t\t-200\t\t300";
+                $"{DateTime.Today:d.M.yyyy}\t\t+500\t\t500\n" +
+                $"{DateTime.Today:d.M.yyyy}\t\t-200\t\t300";
 
             account.Deposit(500);
             account.Withdraw(200);
-            var statement = account.PrintStatement();
+            account.PrintStatement();
             
-            statement.Should().Be(expectedStatement);
+            consoleResult.Should().Be(expectedStatement);
         }
     }
 }
