@@ -37,24 +37,23 @@ namespace BankingApp
         {
             balance += amount;
 
-            transactions.Add(new AccountTransaction
-            {
-                Amount = amount,
-                Balance = balance,
-                Operator = '+',
-                Date = DateTime.Today
-            });
+            RegisterTransaction(amount, false);
         }
 
         public void Withdraw(int amount)
         {
             balance -= amount;
 
-            transactions.Add(new AccountTransaction
+            RegisterTransaction(amount, true);
+        }
+
+        private void RegisterTransaction(int amount, bool withdrawing)
+        {
+            transactions.Insert(0, new AccountTransaction
             {
                 Amount = amount,
                 Balance = balance,
-                Operator = '-',
+                Operator = withdrawing ? '-' : '+',
                 Date = DateTime.Today
             });
         }

@@ -64,8 +64,8 @@ namespace BankingApp.Tests
         {
             var expectedStatement =
                 $"Date\t\tAmount\t\tBalance\n" +
-                $"{DateTime.Today:d.M.yyyy}\t\t+500\t\t500\n" +
-                $"{DateTime.Today:d.M.yyyy}\t\t-200\t\t300";
+                $"{DateTime.Today:d.M.yyyy}\t\t-200\t\t300\n" +
+                $"{DateTime.Today:d.M.yyyy}\t\t+500\t\t500";
 
             account.Deposit(500);
             account.Withdraw(200);
