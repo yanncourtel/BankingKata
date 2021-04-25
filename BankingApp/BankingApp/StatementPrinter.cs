@@ -14,7 +14,7 @@ namespace BankingApp
             this.console = console;
         }
 
-        public void Print(List<AccountTransaction> transactions)
+        public void Print(List<Transaction> transactions)
         {
             if (transactions == null || !transactions.Any())
             {

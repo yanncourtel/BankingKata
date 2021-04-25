@@ -4,6 +4,6 @@ namespace BankingApp
 {
     public interface IStatementPrinter
     {
-        void Print(List<AccountTransaction> transactions);
+        void Print(List<Transaction> transactions);
     }
 }

@@ -28,9 +28,9 @@ namespace BankingApp
             _transactionRepository.Add(GenerateTransaction(-amount));
         }
 
-        private static AccountTransaction GenerateTransaction(int amount)
+        private static Transaction GenerateTransaction(int amount)
         {
-            return new AccountTransaction
+            return new Transaction
             {
                 Amount = amount,
                 Date = DateTime.Today

@@ -4,8 +4,8 @@ namespace BankingApp
 {
     public interface ITransactionRepository
     {
-        List<AccountTransaction> GetAll();
+        List<Transaction> GetAll();
 
-        void Add(AccountTransaction transaction);
+        void Add(Transaction transaction);
     }
 }

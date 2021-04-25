@@ -6,14 +6,14 @@ namespace BankingApp
 {
     public class TransactionRepository : ITransactionRepository
     {
-        public List<AccountTransaction> _accountTransactions = new List<AccountTransaction>();
+        public List<Transaction> _accountTransactions = new List<Transaction>();
 
-        public List<AccountTransaction> GetAll()
+        public List<Transaction> GetAll()
         {
             return _accountTransactions;
         }
 
-        public void Add(AccountTransaction transaction)
+        public void Add(Transaction transaction)
         {
             _accountTransactions.Add(transaction);
         }
