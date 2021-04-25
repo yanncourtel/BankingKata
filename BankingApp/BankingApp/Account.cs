@@ -1,51 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BankingApp
 {
     public class Account : IAccount
     {
-        private readonly ICanRenderDate dateRenderer;
-        private readonly IOutputAdapter console;
-
+        private readonly IStatementPrinter _statementPrinter;
         private readonly ITransactionRepository _transactionRepository;
 
-        public Account(ICanRenderDate dateRenderer, IOutputAdapter console, ITransactionRepository transactionRepository)
+        public Account(IStatementPrinter statementPrinter, ITransactionRepository transactionRepository)
         {
-            this.dateRenderer = dateRenderer;
-            this.console = console;
             _transactionRepository = transactionRepository;
+            _statementPrinter = statementPrinter;
         }
 
         public void PrintStatement()
         {
-            var storedTransactions = _transactionRepository.GetAll();
-            if (storedTransactions == null || !storedTransactions.Any())
-            {
-                console.Send("You have not made any transactions");
-                return;
-            }
-
-            console.Send("Date\t\tAmount\t\tBalance");
-
-            var transactionsToBeSent = new List<TransactionLine>();
-            var runningBalance = 0;
-
-            foreach (var transaction in storedTransactions)
-            {
-                runningBalance += transaction.Amount;
-                
-                transactionsToBeSent.Add(new TransactionLine
-                {
-                    Amount = $"{transaction.Amount}",
-                    Date = $"{dateRenderer.RenderDate(transaction.Date)}",
-                    RunningBalance = $"{runningBalance}"
-                });
-            }
-
-            transactionsToBeSent.Reverse();
-            transactionsToBeSent.ForEach(t => console.Send(t));
+            _statementPrinter.Print(_transactionRepository.GetAll());
         }
 
         public void Deposit(int amount)

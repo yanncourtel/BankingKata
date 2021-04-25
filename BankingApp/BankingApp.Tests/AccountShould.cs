@@ -9,14 +9,12 @@ namespace BankingApp.Tests.Features
     public class AccountShould
     {
         private readonly IAccount account;
-        private readonly Mock<IOutputAdapter> fakeConsole = new Mock<IOutputAdapter>();
         private readonly Mock<ITransactionRepository> fakeRepository = new Mock<ITransactionRepository>();
+        private readonly Mock<IStatementPrinter> fakeStatementPrinter = new Mock<IStatementPrinter>();
 
         public AccountShould()
         {
-            ICanRenderDate dateRenderer = new DateRenderer();
-
-            account = new Account(dateRenderer, fakeConsole.Object, fakeRepository.Object);
+            account = new Account(fakeStatementPrinter.Object, fakeRepository.Object);
         }
 
         [Fact]
@@ -66,14 +64,7 @@ namespace BankingApp.Tests.Features
         [Fact]
         public void Print_Recorded_Transactions()
         {
-            var expectedTransactionLines = new List<TransactionLine>
-            {
-                new TransactionLine { Amount = "500", Date = $"{DateTime.Today:d.M.yyyy}", RunningBalance = "500" },
-                new TransactionLine { Amount = "-100", Date = $"{DateTime.Today:d.M.yyyy}", RunningBalance = "400" },
-                new TransactionLine { Amount = "-150", Date = $"{DateTime.Today:d.M.yyyy}", RunningBalance = "250" }
-            };
-
-            var storedTransactions = new List<AccountTransaction>
+            var expectedTransactions = new List<AccountTransaction>
             {
                 new AccountTransaction { Amount = 500, Date = DateTime.Today },
                 new AccountTransaction { Amount = -100, Date = DateTime.Today },
@@ -82,39 +73,19 @@ namespace BankingApp.Tests.Features
             
             fakeRepository
                 .Setup(x => x.GetAll())
-                .Returns(storedTransactions);
+                .Returns(expectedTransactions);
 
-            var transactionsSent = new List<TransactionLine>();
-            fakeConsole
-                .Setup(x => x.Send(It.IsAny<TransactionLine>()))
-                .Callback((TransactionLine transactionSent) =>
+            var actualTransactions = new List<AccountTransaction>();
+            fakeStatementPrinter
+                .Setup(x => x.Print(It.IsAny<List<AccountTransaction>>()))
+                .Callback((List<AccountTransaction> transactions) =>
                 {
-                    transactionsSent.Insert(0, transactionSent);
+                    actualTransactions = transactions;
                 });
 
             account.PrintStatement();
 
-            transactionsSent.Should().BeEquivalentTo(expectedTransactionLines);
-        }
-
-        [Fact]
-        public void Print_Notice_If_No_Recorded_Transactions()
-        {
-            fakeRepository
-                .Setup(x => x.GetAll())
-                .Returns(new List<AccountTransaction>());
-
-            var consoleResult = string.Empty;
-            fakeConsole
-                .Setup(x => x.Send(It.IsAny<string>()))
-                .Callback((string message) =>
-                {
-                    consoleResult += message;
-                });
-
-            account.PrintStatement();
-
-            consoleResult.Should().Be("You have not made any transactions");
+            actualTransactions.Should().BeEquivalentTo(expectedTransactions);
         }
     }
 }
