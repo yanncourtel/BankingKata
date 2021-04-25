@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace BankingApp
 {
@@ -8,54 +8,63 @@ namespace BankingApp
     {
         private readonly ICanRenderDate dateRenderer;
         private readonly IOutputAdapter console;
-        private int balance;
 
-        private readonly List<AccountTransaction> transactions;
+        private readonly ITransactionRepository _transactionRepository;
 
-        public Account(ICanRenderDate dateRenderer, IOutputAdapter console)
+        public Account(ICanRenderDate dateRenderer, IOutputAdapter console, ITransactionRepository transactionRepository)
         {
             this.dateRenderer = dateRenderer;
             this.console = console;
-            balance = 0;
-            transactions = new List<AccountTransaction>();
+            _transactionRepository = transactionRepository;
         }
 
         public void PrintStatement()
         {
-            StringBuilder statement = new StringBuilder("Date\t\tAmount\t\tBalance");
-
-            foreach (var transaction in transactions)
+            var storedTransactions = _transactionRepository.GetAll();
+            if (storedTransactions == null || !storedTransactions.Any())
             {
-                statement.Append(
-                    $"\n{dateRenderer.RenderDate(transaction.Date)}\t\t{transaction.Operator}{transaction.Amount}\t\t{transaction.Balance}");
+                console.Send("You have not made any transactions");
+                return;
             }
 
-            console.Send(statement.ToString());
+            console.Send("Date\t\tAmount\t\tBalance");
+
+            var transactionsToBeSent = new List<TransactionLine>();
+            var runningBalance = 0;
+
+            foreach (var transaction in storedTransactions)
+            {
+                runningBalance += transaction.Amount;
+                
+                transactionsToBeSent.Add(new TransactionLine
+                {
+                    Amount = $"{transaction.Amount}",
+                    Date = $"{dateRenderer.RenderDate(transaction.Date)}",
+                    RunningBalance = $"{runningBalance}"
+                });
+            }
+
+            transactionsToBeSent.Reverse();
+            transactionsToBeSent.ForEach(t => console.Send(t));
         }
 
         public void Deposit(int amount)
         {
-            balance += amount;
-
-            RegisterTransaction(amount, false);
+            _transactionRepository.Add(GenerateTransaction(amount));
         }
 
         public void Withdraw(int amount)
         {
-            balance -= amount;
-
-            RegisterTransaction(amount, true);
+            _transactionRepository.Add(GenerateTransaction(-amount));
         }
 
-        private void RegisterTransaction(int amount, bool withdrawing)
+        private static AccountTransaction GenerateTransaction(int amount)
         {
-            transactions.Insert(0, new AccountTransaction
+            return new AccountTransaction
             {
                 Amount = amount,
-                Balance = balance,
-                Operator = withdrawing ? '-' : '+',
                 Date = DateTime.Today
-            });
+            };
         }
     }
 }

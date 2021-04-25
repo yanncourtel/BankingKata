@@ -1,77 +1,120 @@
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace BankingApp.Tests
+namespace BankingApp.Tests.Features
 {
     public class AccountShould
     {
         private readonly IAccount account;
         private readonly Mock<IOutputAdapter> fakeConsole = new Mock<IOutputAdapter>();
-        private string consoleResult = string.Empty;
+        private readonly Mock<ITransactionRepository> fakeRepository = new Mock<ITransactionRepository>();
 
         public AccountShould()
         {
             ICanRenderDate dateRenderer = new DateRenderer();
 
-            fakeConsole
-                .Setup(x => x.Send(It.IsAny<string>()))
-                .Callback((string messageSent) =>
+            account = new Account(dateRenderer, fakeConsole.Object, fakeRepository.Object);
+        }
+
+        [Fact]
+        public void Record_Transaction_After_A_Deposit()
+        {
+            var expectedTransaction = new AccountTransaction()
+            {
+                Amount = 500,
+                Date = DateTime.Today
+            };
+
+            AccountTransaction actualTransactionStored = null;
+            fakeRepository
+                .Setup(x => x.Add(It.IsAny<AccountTransaction>()))
+                .Callback((AccountTransaction transaction) =>
                 {
-                    consoleResult = messageSent;
+                    actualTransactionStored = transaction;
                 });
 
-            account = new Account(dateRenderer, fakeConsole.Object);
-        }
-
-        [Fact]
-        public void Be_Able_To_Print_Statement()
-        {
-            account.PrintStatement();
-
-            consoleResult.Should().Be("Date\t\tAmount\t\tBalance");
-        }
-
-        [Fact]
-        public void Be_Able_To_Print_Statement_With_Deposit_Transactions()
-        {
-            var expectedStatement =
-                $"Date\t\tAmount\t\tBalance\n" +
-                $"{DateTime.Today:d.M.yyyy}\t\t+500\t\t500";
-
             account.Deposit(500);
-            account.PrintStatement();
-            
-            consoleResult.Should().Be(expectedStatement);
+
+            actualTransactionStored.Should().BeEquivalentTo(expectedTransaction);
         }
 
         [Fact]
-        public void Be_Able_To_Print_Statement_With_Withdraw_Transactions()
+        public void Record_Transaction_After_A_Withdrawal()
         {
-            var expectedStatement =
-                $"Date\t\tAmount\t\tBalance\n" +
-                $"{DateTime.Today:d.M.yyyy}\t\t-200\t\t-200";
+            var expectedTransaction = new AccountTransaction()
+            {
+                Amount = -100,
+                Date = DateTime.Today
+            };
 
-            account.Withdraw(200);
-            account.PrintStatement();
-            
-            consoleResult.Should().Be(expectedStatement);
+            AccountTransaction actualTransactionStored = null;
+            fakeRepository
+                .Setup(x => x.Add(It.IsAny<AccountTransaction>()))
+                .Callback((AccountTransaction transaction) =>
+                {
+                    actualTransactionStored = transaction;
+                });
+
+            account.Withdraw(100);
+
+            actualTransactionStored.Should().BeEquivalentTo(expectedTransaction);
         }
 
         [Fact]
-        public void Be_Able_To_Print_Statement_With_All_Transactions()
+        public void Print_Recorded_Transactions()
         {
-            var expectedStatement =
-                $"Date\t\tAmount\t\tBalance\n" +
-                $"{DateTime.Today:d.M.yyyy}\t\t-200\t\t300\n" +
-                $"{DateTime.Today:d.M.yyyy}\t\t+500\t\t500";
+            var expectedTransactionLines = new List<TransactionLine>
+            {
+                new TransactionLine { Amount = "500", Date = $"{DateTime.Today:d.M.yyyy}", RunningBalance = "500" },
+                new TransactionLine { Amount = "-100", Date = $"{DateTime.Today:d.M.yyyy}", RunningBalance = "400" },
+                new TransactionLine { Amount = "-150", Date = $"{DateTime.Today:d.M.yyyy}", RunningBalance = "250" }
+            };
 
-            account.Deposit(500);
-            account.Withdraw(200);
-            account.PrintStatement();
+            var storedTransactions = new List<AccountTransaction>
+            {
+                new AccountTransaction { Amount = 500, Date = DateTime.Today },
+                new AccountTransaction { Amount = -100, Date = DateTime.Today },
+                new AccountTransaction { Amount = -150, Date = DateTime.Today }
+            };
             
-            consoleResult.Should().Be(expectedStatement);
+            fakeRepository
+                .Setup(x => x.GetAll())
+                .Returns(storedTransactions);
+
+            var transactionsSent = new List<TransactionLine>();
+            fakeConsole
+                .Setup(x => x.Send(It.IsAny<TransactionLine>()))
+                .Callback((TransactionLine transactionSent) =>
+                {
+                    transactionsSent.Insert(0, transactionSent);
+                });
+
+            account.PrintStatement();
+
+            transactionsSent.Should().BeEquivalentTo(expectedTransactionLines);
+        }
+
+        [Fact]
+        public void Print_Notice_If_No_Recorded_Transactions()
+        {
+            fakeRepository
+                .Setup(x => x.GetAll())
+                .Returns(new List<AccountTransaction>());
+
+            var consoleResult = string.Empty;
+            fakeConsole
+                .Setup(x => x.Send(It.IsAny<string>()))
+                .Callback((string message) =>
+                {
+                    consoleResult += message;
+                });
+
+            account.PrintStatement();
+
+            consoleResult.Should().Be("You have not made any transactions");
         }
     }
 }
