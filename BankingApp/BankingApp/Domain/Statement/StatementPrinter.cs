@@ -8,6 +8,8 @@ namespace BankingApp.Domain.Statement
 {
     public class StatementPrinter : IStatementPrinter
     {
+        private const string HeaderStatement = "Date\t\tAmount\t\tBalance";
+
         private readonly ICanRenderDate dateRenderer;
         private readonly IOutputAdapter console;
 
@@ -25,7 +27,7 @@ namespace BankingApp.Domain.Statement
                 return;
             }
 
-            console.Send("Date\t\tAmount\t\tBalance");
+            console.Send(HeaderStatement);
 
             var transactionsToBeSent = new List<TransactionLine>();
             var runningBalance = 0;
@@ -34,16 +36,26 @@ namespace BankingApp.Domain.Statement
             {
                 runningBalance += transaction.Amount;
 
-                transactionsToBeSent.Add(new TransactionLine
-                {
-                    Amount = $"{transaction.Amount}",
-                    Date = $"{dateRenderer.RenderDate(transaction.Date)}",
-                    RunningBalance = $"{runningBalance}"
-                });
+                transactionsToBeSent.Add(CreateTransactionLine(transaction, runningBalance));
             }
 
+            SendTransactionsToConsole(transactionsToBeSent);
+        }
+
+        private void SendTransactionsToConsole(List<TransactionLine> transactionsToBeSent)
+        {
             transactionsToBeSent.Reverse();
             transactionsToBeSent.ForEach(t => console.Send(t));
+        }
+
+        private TransactionLine CreateTransactionLine(Transaction.Transaction transaction, int runningBalance)
+        {
+            return new TransactionLine
+            {
+                Amount = $"{transaction.Amount}",
+                Date = $"{dateRenderer.RenderDate(transaction.Date)}",
+                RunningBalance = $"{runningBalance}"
+            };
         }
     }
 }
