@@ -40,8 +40,8 @@ namespace BankingApp.Tests.Features
         public void Be_Able_To_Print_Statement_With_All_Transactions()
         {
             var expectedStatement =
-                $"Date\t\tAmount\t\tBalance\n" +
-                $"{DateTime.Today:d.M.yyyy}\t\t-200\t\t300\n" +
+                $"Date\t\tAmount\t\tBalance\r\n" +
+                $"{DateTime.Today:d.M.yyyy}\t\t-200\t\t300\r\n" +
                 $"{DateTime.Today:d.M.yyyy}\t\t500\t\t500";
 
             account.Deposit(500);

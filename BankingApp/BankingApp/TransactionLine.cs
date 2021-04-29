@@ -8,7 +8,7 @@ namespace BankingApp
 
         public override string ToString()
         {
-            return $"\n{Date}" +
+            return $"\r\n{Date}" +
                  $"\t\t{Amount}" +
                  $"\t\t{RunningBalance}";
         }
