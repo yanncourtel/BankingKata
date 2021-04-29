@@ -34,6 +34,15 @@ namespace BankingApp.Tests.BDD.Steps
 
             _account.Deposit(amount);
         }
+
+        [Given(@"a client withdraws (.*) euros on the (.*)")]
+        public void GivenAClientWithdrawsEurosOnThe(int amount, DateTime dateWithdrawal)
+        {
+            SetupTodayDate(dateWithdrawal);
+
+            _account.Withdraw(amount);
+        }
+
         
         [When(@"she prints her bank statement")]
         public void WhenShePrintsHerBankStatement()
@@ -41,8 +50,8 @@ namespace BankingApp.Tests.BDD.Steps
             _account.PrintStatement();
         }
         
-        [Then(@"she should see a statement with the following transactions:")]
-        public void ThenSheShouldSeeAStatementWithTheFollowingTransactions(string statementPrinted)
+        [Then(@"she should see the following statement:")]
+        public void ThenSheShouldSeeTheFollowingStatement(string statementPrinted)
         {
             _fakeConsole.ToString().Should().BeEquivalentTo(statementPrinted);
         }
