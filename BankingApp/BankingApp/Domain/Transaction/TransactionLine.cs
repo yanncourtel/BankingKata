@@ -1,4 +1,4 @@
-namespace BankingApp
+namespace BankingApp.Domain.Transaction
 {
     public class TransactionLine
     {

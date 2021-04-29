@@ -1,6 +1,6 @@
 using System;
 
-namespace BankingApp
+namespace BankingApp.Domain.Clock
 {
     public class Clock : IClock
     {

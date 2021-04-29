@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
+using BankingApp.Domain;
+using BankingApp.Domain.Account;
+using BankingApp.Domain.Clock;
+using BankingApp.Domain.Statement;
+using BankingApp.Domain.Transaction;
 using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace BankingApp.Tests.Features
+namespace BankingApp.Tests.Domain
 {
     public class AccountShould
     {
@@ -77,7 +82,7 @@ namespace BankingApp.Tests.Features
                 new Transaction { Amount = -100, Date = expectedTodayDate },
                 new Transaction { Amount = -150, Date = expectedTodayDate }
             };
-            
+
             fakeRepository
                 .Setup(x => x.GetAll())
                 .Returns(expectedTransactions);

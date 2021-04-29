@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BankingApp
+namespace BankingApp.Domain.Date
 {
     public class DateRenderer : ICanRenderDate
     {

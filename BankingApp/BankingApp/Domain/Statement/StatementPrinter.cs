@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace BankingApp
+using BankingApp.Domain.Date;
+using BankingApp.Domain.Transaction;
+
+namespace BankingApp.Domain.Statement
 {
     public class StatementPrinter : IStatementPrinter
     {
@@ -14,7 +17,7 @@ namespace BankingApp
             this.console = console;
         }
 
-        public void Print(List<Transaction> transactions)
+        public void Print(List<Transaction.Transaction> transactions)
         {
             if (transactions == null || !transactions.Any())
             {
@@ -30,7 +33,7 @@ namespace BankingApp
             foreach (var transaction in transactions)
             {
                 runningBalance += transaction.Amount;
-                
+
                 transactionsToBeSent.Add(new TransactionLine
                 {
                     Amount = $"{transaction.Amount}",

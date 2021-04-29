@@ -1,7 +1,17 @@
 ﻿using System;
 using System.Text;
+
+using BankingApp.Domain.Account;
+using BankingApp.Domain.Clock;
+using BankingApp.Domain.Date;
+using BankingApp.Domain.Statement;
+using BankingApp.Domain.Transaction;
+using BankingApp.Infrastructure.Transaction;
+
 using FluentAssertions;
+
 using Moq;
+
 using TechTalk.SpecFlow;
 
 namespace BankingApp.Tests.BDD.Steps
@@ -10,11 +20,11 @@ namespace BankingApp.Tests.BDD.Steps
     public sealed class AccountStepDefinitions
     {
         // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
-        Mock<IOutputAdapter> _fakeOutput = new Mock<IOutputAdapter>();
-        Mock<IClock> _clock = new Mock<IClock>();
-        private Account _account;
+        private readonly Mock<IOutputAdapter> _fakeOutput = new Mock<IOutputAdapter>();
+        private readonly Mock<IClock> _clock = new Mock<IClock>();
+        private readonly Account _account;
 
-        private StringBuilder _fakeConsole = new StringBuilder();
+        private readonly StringBuilder _fakeConsole = new StringBuilder();
 
         public AccountStepDefinitions()
         {
@@ -43,13 +53,13 @@ namespace BankingApp.Tests.BDD.Steps
             _account.Withdraw(amount);
         }
 
-        
+
         [When(@"she prints her bank statement")]
         public void WhenShePrintsHerBankStatement()
         {
             _account.PrintStatement();
         }
-        
+
         [Then(@"she should see the following statement:")]
         public void ThenSheShouldSeeTheFollowingStatement(string statementPrinted)
         {
@@ -66,7 +76,7 @@ namespace BankingApp.Tests.BDD.Steps
                 .Setup(x => x.Send(It.IsAny<TransactionLine>()))
                 .Callback((TransactionLine transactionLine) => { AddMessageToConsole(transactionLine.ToString()); });
         }
-        
+
         private void SetupTodayDate(DateTime expectedTodayDate)
         {
             _clock

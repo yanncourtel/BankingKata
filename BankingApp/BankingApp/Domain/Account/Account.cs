@@ -1,4 +1,8 @@
-namespace BankingApp
+using BankingApp.Domain.Clock;
+using BankingApp.Domain.Statement;
+using BankingApp.Domain.Transaction;
+
+namespace BankingApp.Domain.Account
 {
     public class Account : IAccount
     {
@@ -28,9 +32,9 @@ namespace BankingApp
             _transactionRepository.Add(GenerateTransaction(-amount));
         }
 
-        private Transaction GenerateTransaction(int amount)
+        private Transaction.Transaction GenerateTransaction(int amount)
         {
-            return new Transaction
+            return new Transaction.Transaction
             {
                 Amount = amount,
                 Date = _clock.GetTodayDate()

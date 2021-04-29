@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BankingApp
+namespace BankingApp.Domain.Transaction
 {
     public interface ITransactionRepository
     {
