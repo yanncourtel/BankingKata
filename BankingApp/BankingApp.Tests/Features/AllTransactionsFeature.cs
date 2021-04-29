@@ -33,7 +33,7 @@ namespace BankingApp.Tests.Features
                     consoleResult += message;
                 });
 
-            account = new Account(new StatementPrinter(dateRenderer, fakeConsole.Object), transactionRepository);
+            account = new Account(new StatementPrinter(dateRenderer, fakeConsole.Object), transactionRepository, new Clock());
         }
 
         [Fact]

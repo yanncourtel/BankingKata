@@ -115,8 +115,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("she prints her bank statement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
- testRunner.Then("she should see a statement with the following transactions:", "| Date       | Amount | RunningBalance |\r\n| 2021/04/27 | +500   | 500            " +
-                        "|", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("she should see a statement with the following transactions:", "Date\t\tAmount\t\tBalance\r\n27.4.2021\t\t500\t\t500", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
