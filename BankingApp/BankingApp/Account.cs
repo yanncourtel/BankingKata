@@ -1,15 +1,15 @@
-using System;
-
 namespace BankingApp
 {
     public class Account : IAccount
     {
         private readonly IStatementPrinter _statementPrinter;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IClock _clock;
 
-        public Account(IStatementPrinter statementPrinter, ITransactionRepository transactionRepository)
+        public Account(IStatementPrinter statementPrinter, ITransactionRepository transactionRepository, IClock clock)
         {
             _transactionRepository = transactionRepository;
+            _clock = clock;
             _statementPrinter = statementPrinter;
         }
 
@@ -28,12 +28,12 @@ namespace BankingApp
             _transactionRepository.Add(GenerateTransaction(-amount));
         }
 
-        private static Transaction GenerateTransaction(int amount)
+        private Transaction GenerateTransaction(int amount)
         {
             return new Transaction
             {
                 Amount = amount,
-                Date = DateTime.Today
+                Date = _clock.GetTodayDate()
             };
         }
     }

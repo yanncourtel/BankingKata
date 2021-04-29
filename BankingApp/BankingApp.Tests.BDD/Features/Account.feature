@@ -5,8 +5,8 @@ Scenario: Can print a statement after with a deposit transaction
 	When she prints her bank statement
 	Then she should see a statement with the following transactions:
 	"""
-	| Date       | Amount | RunningBalance |
-	| 2021/04/27 | +500   | 500            |
+	Date		Amount		Balance
+	27.4.2021		500		500
 	"""
 
  

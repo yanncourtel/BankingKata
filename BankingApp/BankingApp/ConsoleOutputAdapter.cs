@@ -12,11 +12,6 @@ namespace BankingApp
 
         public void Send(TransactionLine transactionLine)
         {
-            //statement.Append(
-            //    $"\n{dateRenderer.RenderDate(transaction.Date)}" +
-            //    $"\t\t{transaction.Amount}" +
-            //    $"\t\t{runningBalance}");
-
             Console.WriteLine(transactionLine);
         }
     }
