@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+
 using BankingApp.Domain.Statement;
-using BankingApp.Domain.Transaction;
 
 namespace BankingApp.Infrastructure
 {

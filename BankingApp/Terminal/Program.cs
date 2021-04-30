@@ -1,15 +1,14 @@
 ﻿using BankingApp.Domain.Account;
 using BankingApp.Domain.Clock;
-using BankingApp.Domain.Helpers;
 using BankingApp.Domain.Statement;
 using BankingApp.Infrastructure;
 using BankingApp.Infrastructure.Transaction;
 
 namespace BankingApp.Terminal
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var clock = new Clock();
             var consoleAdapter = new ConsoleOutputAdapter();

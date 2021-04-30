@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Text;
-using BankingApp.Domain.Helpers;
+
 using BankingApp.Domain.Statement;
 using BankingApp.Domain.Transaction;
+
 using Castle.Components.DictionaryAdapter;
+
 using FluentAssertions;
+
 using Moq;
+
 using Xunit;
 
 namespace BankingApp.Tests.Domain

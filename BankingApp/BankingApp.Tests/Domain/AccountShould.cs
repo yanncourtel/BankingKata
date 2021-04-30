@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+
 using BankingApp.Domain;
 using BankingApp.Domain.Account;
 using BankingApp.Domain.Clock;
 using BankingApp.Domain.Statement;
 using BankingApp.Domain.Transaction;
+
 using FluentAssertions;
+
 using Moq;
+
 using Xunit;
 
 namespace BankingApp.Tests.Domain

@@ -1,5 +1,3 @@
-using BankingApp.Domain.Transaction;
-
 namespace BankingApp.Domain.Statement
 {
     public interface IOutputAdapter

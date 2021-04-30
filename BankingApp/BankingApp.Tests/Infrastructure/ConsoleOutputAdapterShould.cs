@@ -1,7 +1,10 @@
 ﻿using System;
+
 using BankingApp.Domain.Statement;
 using BankingApp.Domain.Transaction;
+
 using FluentAssertions;
+
 using Xunit;
 
 namespace BankingApp.Tests.Infrastructure

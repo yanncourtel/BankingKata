@@ -1,6 +1,9 @@
 ﻿using System;
+
 using BankingApp.Domain.Helpers;
+
 using FluentAssertions;
+
 using Xunit;
 
 namespace BankingApp.Tests.Domain

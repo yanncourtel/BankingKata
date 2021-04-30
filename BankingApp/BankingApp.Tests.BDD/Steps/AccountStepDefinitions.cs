@@ -3,9 +3,7 @@ using System.Text;
 
 using BankingApp.Domain.Account;
 using BankingApp.Domain.Clock;
-using BankingApp.Domain.Helpers;
 using BankingApp.Domain.Statement;
-using BankingApp.Domain.Transaction;
 using BankingApp.Infrastructure.Transaction;
 
 using FluentAssertions;

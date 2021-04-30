@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using BankingApp.Domain.Transaction;
 using BankingApp.Infrastructure.Transaction;
+
 using FluentAssertions;
+
 using Xunit;
 
 namespace BankingApp.Tests.Infrastructure

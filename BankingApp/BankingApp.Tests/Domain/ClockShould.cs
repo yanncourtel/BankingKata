@@ -1,6 +1,9 @@
 ﻿using System;
+
 using BankingApp.Domain.Clock;
+
 using FluentAssertions;
+
 using Xunit;
 
 namespace BankingApp.Tests.Domain
