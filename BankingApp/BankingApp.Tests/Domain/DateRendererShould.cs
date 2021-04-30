@@ -1,5 +1,5 @@
 ﻿using System;
-using BankingApp.Domain.Date;
+using BankingApp.Domain.Helpers;
 using FluentAssertions;
 using Xunit;
 
@@ -12,7 +12,7 @@ namespace BankingApp.Tests.Domain
         {
             var dateToFormat = new DateTime(2020, 03, 20);
 
-            var dateFormatted = new DateRenderer().RenderDate(dateToFormat);
+            var dateFormatted = DateRenderer.RenderDate(dateToFormat);
 
             dateFormatted.Should().Be("20.3.2020");
         }

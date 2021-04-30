@@ -3,7 +3,7 @@ using System.Text;
 
 using BankingApp.Domain.Account;
 using BankingApp.Domain.Clock;
-using BankingApp.Domain.Date;
+using BankingApp.Domain.Helpers;
 using BankingApp.Domain.Statement;
 using BankingApp.Domain.Transaction;
 using BankingApp.Infrastructure.Transaction;
@@ -30,8 +30,7 @@ namespace BankingApp.Tests.BDD.Steps
         {
             SetupFakeConsole();
 
-            var dateRenderer = new DateRenderer();
-            var statementPrinter = new StatementPrinter(dateRenderer, _fakeOutput.Object);
+            var statementPrinter = new StatementPrinter(_fakeOutput.Object);
             var repository = new TransactionRepository();
 
             _account = new Account(statementPrinter, repository, _clock.Object);
@@ -73,8 +72,8 @@ namespace BankingApp.Tests.BDD.Steps
                 .Callback((string message) => AddMessageToConsole(message));
 
             _fakeOutput
-                .Setup(x => x.Send(It.IsAny<TransactionLine>()))
-                .Callback((TransactionLine transactionLine) => { AddMessageToConsole(transactionLine.ToString()); });
+                .Setup(x => x.Send(It.IsAny<StatementTransactionLine>()))
+                .Callback((StatementTransactionLine transactionLine) => { AddMessageToConsole(transactionLine.ToString()); });
         }
 
         private void SetupTodayDate(DateTime expectedTodayDate)

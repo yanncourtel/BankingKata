@@ -1,21 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BankingApp.Domain.Date;
-using BankingApp.Domain.Transaction;
-
 namespace BankingApp.Domain.Statement
 {
     public class StatementPrinter : IStatementPrinter
     {
         private const string HeaderStatement = "Date\t\tAmount\t\tBalance";
 
-        private readonly ICanRenderDate dateRenderer;
         private readonly IOutputAdapter console;
 
-        public StatementPrinter(ICanRenderDate dateRenderer, IOutputAdapter console)
+        public StatementPrinter(IOutputAdapter console)
         {
-            this.dateRenderer = dateRenderer;
             this.console = console;
         }
 
@@ -29,33 +24,23 @@ namespace BankingApp.Domain.Statement
 
             console.Send(HeaderStatement);
 
-            var transactionsToBeSent = new List<TransactionLine>();
+            var transactionsToBeSent = new List<StatementTransactionLine>();
             var runningBalance = 0;
 
             foreach (var transaction in transactions)
             {
                 runningBalance += transaction.Amount;
 
-                transactionsToBeSent.Add(CreateTransactionLine(transaction, runningBalance));
+                transactionsToBeSent.Add(new StatementTransactionLine(transaction, runningBalance));
             }
 
             SendTransactionsToConsole(transactionsToBeSent);
         }
 
-        private void SendTransactionsToConsole(List<TransactionLine> transactionsToBeSent)
+        private void SendTransactionsToConsole(List<StatementTransactionLine> transactionsToBeSent)
         {
             transactionsToBeSent.Reverse();
             transactionsToBeSent.ForEach(t => console.Send(t));
-        }
-
-        private TransactionLine CreateTransactionLine(Transaction.Transaction transaction, int runningBalance)
-        {
-            return new TransactionLine
-            {
-                Amount = $"{transaction.Amount}",
-                Date = $"{dateRenderer.RenderDate(transaction.Date)}",
-                RunningBalance = $"{runningBalance}"
-            };
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using BankingApp.Domain.Account;
 using BankingApp.Domain.Clock;
-using BankingApp.Domain.Date;
+using BankingApp.Domain.Helpers;
 using BankingApp.Domain.Statement;
 using BankingApp.Infrastructure;
 using BankingApp.Infrastructure.Transaction;
@@ -12,9 +12,8 @@ namespace BankingApp.Terminal
         static void Main(string[] args)
         {
             var clock = new Clock();
-            var dateRenderer = new DateRenderer();
             var consoleAdapter = new ConsoleOutputAdapter();
-            var statementPrinter = new StatementPrinter(dateRenderer, consoleAdapter);
+            var statementPrinter = new StatementPrinter(consoleAdapter);
             var transactionRepository = new TransactionRepository();
             var account = new Account(statementPrinter, transactionRepository, clock);
 

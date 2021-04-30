@@ -12,7 +12,7 @@ namespace BankingApp.Infrastructure
             SendToConsole(message);
         }
 
-        public void Send(TransactionLine transactionLine)
+        public void Send(StatementTransactionLine transactionLine)
         {
             SendToConsole(transactionLine.ToString());
         }

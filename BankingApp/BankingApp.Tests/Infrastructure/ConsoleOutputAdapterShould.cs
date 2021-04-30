@@ -1,4 +1,6 @@
-﻿using BankingApp.Domain.Transaction;
+﻿using System;
+using BankingApp.Domain.Statement;
+using BankingApp.Domain.Transaction;
 using FluentAssertions;
 using Xunit;
 
@@ -20,10 +22,8 @@ namespace BankingApp.Tests.Infrastructure
         [Fact]
         public void Send_Transaction_Line_To_Console()
         {
-            var transactionLine = new TransactionLine()
-            {
-                Amount = "500", Date = "2021.3.26", RunningBalance = "500"
-            };
+            var transactionLine = new StatementTransactionLine(
+                new Transaction { Amount = 500, Date = new DateTime(2021, 03, 26) }, 500);
 
             var expectedMessage = transactionLine.ToString();
             var outputAdapter = new TestableConsoleOutputAdapter();

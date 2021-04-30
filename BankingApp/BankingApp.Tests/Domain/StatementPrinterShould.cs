@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using BankingApp.Domain.Date;
+using BankingApp.Domain.Helpers;
 using BankingApp.Domain.Statement;
 using BankingApp.Domain.Transaction;
 using Castle.Components.DictionaryAdapter;
@@ -20,7 +20,7 @@ namespace BankingApp.Tests.Domain
         {
             SetupFakeConsole();
 
-            _statementPrinter = new StatementPrinter(new DateRenderer(), _fakeOutput.Object);
+            _statementPrinter = new StatementPrinter(_fakeOutput.Object);
         }
 
         [Fact]
@@ -67,8 +67,8 @@ namespace BankingApp.Tests.Domain
                 .Callback((string message) => AddMessageToConsole(message));
 
             _fakeOutput
-                .Setup(x => x.Send(It.IsAny<TransactionLine>()))
-                .Callback((TransactionLine transactionLine) => { AddMessageToConsole(transactionLine.ToString()); });
+                .Setup(x => x.Send(It.IsAny<StatementTransactionLine>()))
+                .Callback((StatementTransactionLine transactionLine) => { AddMessageToConsole(transactionLine.ToString()); });
         }
 
         private void AddMessageToConsole(string message)
