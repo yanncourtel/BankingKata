@@ -1,4 +1,5 @@
 # BankingKata
+A new banking system to develop from scratch using TDD outside-in approach.
 
 # Your Task
 Your bank is tired of its mainframe COBOL accounting software and they hired both of you for a greenfield project in - what a happy coincidence
